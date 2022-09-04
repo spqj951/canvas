@@ -4,6 +4,7 @@ const ctx = canvas.getContext("2d");
 const colorOptions = Array.from(
   document.getElementsByClassName("color-option")
 );
+const saveBtn = document.getElementById("save-btn");
 const eraseBtn = document.getElementById("erase-btn");
 const resetBtn = document.getElementById("reset-btn");
 const modeBtn = document.getElementById("mode-btn");
@@ -73,7 +74,13 @@ function onFileChange(event) {
     ctx.drawImage(image, 0, 0, 100, 20);
   };
 }
-
+function onSaveClick() {
+  const url = canvas.toDataURL();
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "myToken";
+  a.click();
+}
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", stopPainting);
@@ -86,3 +93,4 @@ resetBtn.addEventListener("click", onReset);
 eraseBtn.addEventListener("click", onErase);
 colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
 file.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click", onSaveClick);
