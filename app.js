@@ -16,6 +16,8 @@ const lineColor = document.getElementById("color");
 ctx.strokeStyle = lineColor.value;
 let isPainting = false;
 let isFilling = false;
+let x = 0;
+let y = 0;
 function onMove(event) {
   if (isPainting) {
     ctx.lineTo(event.offsetX, event.offsetY);
@@ -50,11 +52,13 @@ function onModeClick() {
     modeBtn.innerText = "Draw";
   }
 }
-function onCanvasClick() {
+function onCanvasClick(event) {
   if (isFilling) {
     ctx.fillStyle = color.value;
     ctx.fillRect(0, 0, 800, 800);
   }
+  x = event.offsetX;
+  y = event.offsetY;
 }
 function onReset() {
   ctx.fillStyle = "white";
@@ -71,7 +75,8 @@ function onFileChange(event) {
   const image = new Image();
   image.src = url;
   image.onload = function () {
-    ctx.drawImage(image, 0, 0, 100, 20);
+    ctx.drawImage(image, x, y, 100, 100);
+    file.value = null;
   };
 }
 function onSaveClick() {
